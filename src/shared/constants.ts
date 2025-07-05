@@ -1,8 +1,7 @@
-import appgenConfig from "@/appgen.config"
 
 export const SERVER_URL =
   process.env.NODE_ENV === "production"
-    ? appgenConfig.serverUrl
+    ? process.env.REACT_APP_SERVER_URL || "https://pmboard.app"
     : "http://localhost:8000";
 
-export const DOMAIN = appgenConfig.title.toLowerCase(); // Used for local storage key and other places where we need to identify the domain.
+export const DOMAIN = "PMBoard"; // Used for local storage key and other places where we need to identify the domain.

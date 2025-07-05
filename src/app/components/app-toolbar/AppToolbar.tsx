@@ -1,4 +1,3 @@
-import appgenConfig from "@/appgen.config";
 import { cn } from "@/ui/lib/utils";
 import {
   Toolbar,
@@ -7,12 +6,12 @@ import {
   ToolbarBadge,
   ToolbarGroup,
 } from "./Toolbar";
-import { ChevronLeft, Menu } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 import { useAppSelector } from "@/state/hooks";
 import { accountPaths } from "@/app/router/RouterPaths";
-import { useSidebar } from "@/ui/components/sidebar";
 import { Button } from "@/ui/components/button";
+import { DOMAIN } from "@/shared/constants";
 
 type AppToolbarProps = {
   sidebarTrigger?: React.ReactNode | boolean;
@@ -35,7 +34,6 @@ export const AppToolbar = ({
 }: AppToolbarProps) => {
   const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
-  const { toggleSidebar } = useSidebar();
 
   const profileImageURL =
     user && typeof user.profile_picture_url === "string"
@@ -49,14 +47,14 @@ export const AppToolbar = ({
     <div>
       <Toolbar
         className={cn(
-          "w-screen fixed top-0 left-0 flex justify-between px-4 py-2 z-50 h-16 bg-sidebar-primary",
+          "w-screen fixed top-0 left-0 flex justify-between px-4 py-2 z-50 h-16 bg-toolbar-background text-toolbar-text",
           className
         )}
       >
         <ToolbarGroup className="gap-4">
           {/* Sidebar trigger can be false|true|a custom component */}
           {!sidebarTrigger ? null : typeof sidebarTrigger === "boolean" ? (
-            <Menu className="cursor-pointer text-sidebar-primary-foreground" onClick={() => toggleSidebar()} />
+            <></>
           ) : (
             sidebarTrigger
           )}
@@ -74,12 +72,8 @@ export const AppToolbar = ({
               className="p-2 cursor-pointer hover-highlight rounded-full flex flex-col gap-1 justify-center items-center"
               onClick={() => navigate("/")}
             >
-              <img
-                src="/icon.svg"
-                alt={appgenConfig.title}
-                className="w-8 h-8"
-              />
-              <span className="text-xs ">{appgenConfig.title}</span>
+              <img src="/icon.svg" alt={DOMAIN} className="w-8 h-8" />
+              <span className="text-xs ">{DOMAIN}</span>
             </button>
           ) : null}
           {customItem ? customItem : null}

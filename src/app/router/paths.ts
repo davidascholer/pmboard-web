@@ -1,7 +1,5 @@
 export default {
   home: "",
-  history: "history",
-  saved: "saved",
   auth: {
     root: "auth",
     signIn: "",

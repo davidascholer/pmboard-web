@@ -1,8 +1,8 @@
 import React from "react";
-import { cn } from "@/ui/lib/utils";
 import useForceDelay from "../utils/hooks/useForceDelay";
 import ErrorBoundary from "./ErrorBoundary";
 import LoadingWithChildren from "./LoadingWithChildren";
+import { cn } from "@/ui/lib/utils";
 
 interface PageContainerProps {
   children: React.ReactNode;
@@ -23,25 +23,19 @@ const PageContainer: React.FC<PageContainerProps> = ({
 
   if ((loading || isLoading) && !disableAutoLoading) {
     return (
-      <>
+      <div className="w-screen h-screen flex flex-col pt-16">
         <LoadingWithChildren>{toolbar}</LoadingWithChildren>
-      </>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className={cn("flex flex-col pt-16", className)}>
       {toolbar}
-
-      <div
-        className={cn(
-          "flex flex-col items-center w-full h-full p-1",
-          className
-        )}
-      >
+      <div className={"w-screen h-screen flex flex-col"}>
         <ErrorBoundary>{children}</ErrorBoundary>
       </div>
-    </>
+    </div>
   );
 };
 
