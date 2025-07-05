@@ -1,0 +1,22 @@
+export default {
+  home: "",
+  history: "history",
+  saved: "saved",
+  auth: {
+    root: "auth",
+    signIn: "",
+    signUp: "sign-up",
+    tokenSent: "email-sent",
+    resetPassword: "reset-password",
+    forgotPassword: "forgot-password",
+    verifyToken: "verify-token/:token",
+    verifyCode: "verify-code/:code",
+  },
+  account: "account",
+  profile: "profile",
+  settings: "settings",
+  notifications: "notifications",
+  privacyPolicy: "privacy-policy",
+  termsOfService: "terms-of-service",
+  test: "test",
+};

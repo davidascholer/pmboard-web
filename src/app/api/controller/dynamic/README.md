@@ -1,0 +1,4 @@
+- This folder is the controller for dynamic api data to the static api data.
+- This handles all of the dynamic API calls, utility functions, and types for the static api.
+- Customizing this dynamic folder is all you need to do to use a different API.
+- This file should be the same in both react and react native applications.
