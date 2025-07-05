@@ -1,25 +1,4 @@
-/*
-- Basic API features this module is designed for:
-  - API pattern type
-    - (endpoint:url_string, listingsPerPage:number, currentPage:number) => {partialList:unknown[], totalPages: number, currentPage, number, totalListCount: number}
-- Advanced API features this module is designed for:
-  - Menu options:
-    - Changes the param list type i.e. subfolder query type
-    - Are queried.
-   - Filter options:
-    - Changes the search parameters
-- Path params:
-  - 'page' (page:number) default 1
-  - 'search' (search?:string) default undefined || ""
 
-  The flow:
-  - After the query data is populated, it is saved to the apiData state
-  - The paginated data is then updated based on the apiData state
-  - The paginated data is then used to display the list of items
-  - Changing the search input, filter items, menu items, or page will trigger a new API call
-    - The API call is made using the useGetListQuery hook
-    - This updates the window url as well
-*/
 import React, {
   useCallback,
   useEffect,
@@ -331,56 +310,13 @@ const QueryList: React.FC = () => {
             <Searchbar
               className="flex-1"
               initialValue={""}
-              // menuItems={menuItemsStringList}
-              // onMenuItemSelected={handleMenuItemSelected}
-              // menuItemSelected={
-              //   menuItem?.filterDisplayName || menuItem?.filterName || ""
-              // }
-              // initialMenuSelection={"All"}
-              // onFilterItemsSelected={handleFilterItemsSelected}
-              // filterItems={filterItemStringList}
-              // filterItemsChecked={filterItems.map(
-              //   (item) => item.filterDisplayName || item.filterName
-              // )}
               onSearchInputChanged={handleTextChanged}
             />
           }
         />
       }
     >
-      <>
-        {paginatedData?.paginatedList?.length === 0 ? (
-          <div className="flex justify-center">
-            <p className="text-lg font-light">
-              No results found. Please try a different search.
-            </p>
-          </div>
-        ) : (
-          <div
-            id="query-list-container"
-            className="flex justify-evenly flex-wrap w-full gap-4"
-          >
-            {paginatedData?.paginatedList?.map(
-              (item: ApiListItemType, key: number) => (
-                <div key={key}>
-                  {item.imageUrl ? <QueryListItem item={item} /> : null}
-                  {/* If the item has no imageUrl, do no render */}
-                  {/* <QueryListItem item={item} /> */}
-                </div>
-              )
-            )}
-          </div>
-        )}
-        <div id="pagination-container" className="mt-8 px-2">
-          <AppPagination
-            className={searchInputValue !== "" ? "hidden" : ""}
-            totalItems={paginatedData?.totalItemCount || 0}
-            currentPage={paginatedData?.currentPage || 1}
-            itemsPerPage={ITEMS_PER_PAGE}
-            currentURL={location.pathname}
-          />
-        </div>
-      </>
+    <div></div>
     </PageContainer>
   );
 };

@@ -38,6 +38,11 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --item-color-bee-neutral : #a76f2f;
+  --item-color-bee-accent-light : #FFB700;
+  --item-color-bee-accent-dark : #5A3E2B;
+  --item-color-bee-light : #F3E6C9;
+  --item-color-bee-dark : #2F2F2F;
 }
 
 :root {
