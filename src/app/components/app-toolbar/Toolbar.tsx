@@ -3,7 +3,7 @@
 import * as React from "react";
 import * as ToolbarPrimitive from "@radix-ui/react-toolbar";
 
-import { Avatar,AvatarImage, AvatarFallback } from "@/ui/components/avatar";
+import { Avatar, AvatarImage, AvatarFallback } from "@/ui/components/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +16,6 @@ import { User } from "lucide-react";
 import { RouterPathsType } from "@/app/router/RouterPaths";
 import { useNavigate } from "react-router";
 import { cn } from "@/ui/lib/utils";
-import { NotificationBadge } from "../notification/NotificationBadge";
 
 type ToolbarProps = {
   className?: string;
@@ -82,26 +81,26 @@ type ToolbarBadgeProps = {
   href: string;
   count?: number;
   className?: string;
+  children?: React.ReactNode;
   iconSize?: number;
   pingClassName?: string;
 };
 
 const ToolbarBadge = ({
   href,
-  count = 0,
-  iconSize = 24,
+  children,
   className,
   ...props
 }: ToolbarBadgeProps) => (
   <ToolbarPrimitive.Link
     className={cn(
-      "hidden min-[360px]:flex relative p-2 bg-none hover:bg-none items-center rounded-full outline-none focus:bg-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+      "flex relative p-2 bg-none hover:bg-none items-center rounded-full outline-none focus:bg-accent data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
       className
     )}
     href={href}
     {...props}
   >
-    <NotificationBadge count={count} iconSize={iconSize} iconClassName="text-sidebar-primary-foreground" className="hover:bg-none"/>
+    {children}
   </ToolbarPrimitive.Link>
 );
 ToolbarBadge.displayName = ToolbarPrimitive.Link.displayName;
@@ -162,10 +161,10 @@ ToolbarAvatarDropdownProps) => {
           className
         )}
       >
-        <Avatar>
-          <AvatarImage src={imageSrc} />
+        <Avatar className="bg-none">
+          <AvatarImage src={imageSrc}/>
           <AvatarFallback>
-            <User />
+            <User size={28} />
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
@@ -180,11 +179,11 @@ ToolbarAvatarDropdownProps) => {
           >
             {/* use "window.location.href = item.ur" if react-router is not used */}
             <button
-              className="container flex justify-around gap-2 items-center cursor-pointer hover:text-sidebar-primary-foreground dark:hover:text-black"
+              className="container flex justify-around gap-2 items-center cursor-pointer hover:text-sidebar-primary-foreground dark:hover:text-toolbar-text"
               onClick={() => navigate(item.url)}
-              >
+            >
               {item.icon ? <item.icon /> : null}
-              <span >{item.title}</span>
+              <span>{item.title}</span>
             </button>
           </DropdownMenuItem>
         ))}

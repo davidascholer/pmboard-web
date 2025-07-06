@@ -12,6 +12,7 @@ import { useAppSelector } from "@/state/hooks";
 import { accountPaths } from "@/app/router/RouterPaths";
 import { Button } from "@/ui/components/button";
 import { DOMAIN } from "@/shared/constants";
+import { NotificationBadge } from "../notification/NotificationBadge";
 
 type AppToolbarProps = {
   sidebarTrigger?: React.ReactNode | boolean;
@@ -86,7 +87,14 @@ export const AppToolbar = ({
             count={notificationCount}
             href="/notifications"
             iconSize={24}
-          />
+          >
+            <NotificationBadge
+              count={0}
+              iconSize={24}
+              iconClassName="text-sidebar-primary-foreground"
+              className="hover:bg-none"
+            />
+          </ToolbarBadge>
           {accountPaths ? (
             <ToolbarAvatarDropdown
               imageSrc={profileImageURL}
