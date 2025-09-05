@@ -1,5 +1,128 @@
 @import "tailwindcss";
 
+/* Quicksand Font Family */
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-Regular.otf") format("opentype"),
+    url("/quicksand_font/Quicksand-Regular.otf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand";
+  src: url("/quicksand_font/Quicksand-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Quicksand-Dash";
+  src: url("/quicksand_font/Quicksand_Dash.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ubuntu Font Family */
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-MediumItalic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url("/ubuntu_font/Ubuntu-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -30,22 +153,24 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
-  --color-toolbar-primary: #F3E6C988;
-  --color-toolbar-background: #F3E6C944;
-  --color-toolbar-accent: #FFB700;
-  --color-toolbar-text: #F3E6C9;
-  --color-toolbar-ring: #FFB700;
-  --color-bee-neutral : #a76f2f;
-  --color-bee-background : #F3E6C988;
-  --color-bee-accent-light : #FFB700;
-  --color-bee-accent-dark : #5A3E2B;
-  --color-bee-light : #F3E6C9;
-  --color-bee-dark : #2F2F2F;
+  --color-toolbar-primary: var(--color-bee-background);
+  --color-toolbar-background: var(--color-bee-background-light);
+  --color-toolbar-accent: var(--color-bee-accent-light);
+  --color-toolbar-text: var(--color-bee-light);
+  --color-toolbar-ring: var(--color-bee-accent-light);
+  --color-bee-neutral: #a76f2f;
+  --color-bee-background: #f3e6c988;
+  --color-bee-background-light: #f3e6c944;
+  --color-bee-background-accent: #5a3e2baa;
+  --color-bee-accent-light: #ffb700;
+  --color-bee-accent-dark: #5a3e2b;
+  --color-bee-light: #f3e6c9;
+  --color-bee-dark: #2f2f2f;
 }
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: var(--color-bee-neutral);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -121,3 +246,33 @@
   }
 }
 
+.font-quicksand {
+  font-family: "Quicksand", sans-serif !important;
+}
+
+.font-quicksand-bold {
+  font-family: "Quicksand", sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.font-quicksand-semibold {
+  font-family: "Quicksand", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.font-ubuntu {
+  font-family: "Ubuntu", sans-serif !important;
+}
+
+.font-ubuntu-bold {
+  font-family: "Ubuntu", sans-serif !important;
+  font-weight: 700 !important;
+}
+.font-ubuntu-semibold {
+  font-family: "Ubuntu", sans-serif !important;
+  font-weight: 600 !important;
+}
+
+.font-quicksand-dash {
+  font-family: "Quicksand-Dash", sans-serif !important;
+}

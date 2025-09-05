@@ -7,8 +7,6 @@ import {
   LucideProps,
   User,
   Settings,
-  History,
-  Bookmark,
 } from "lucide-react";
 
 import paths from "./paths";
@@ -27,16 +25,6 @@ export const routerPaths: RouterPathsType[] = [
     title: "Home",
     url: `/${paths.home}`,
     icon: Home,
-  },
-  {
-    title: "Saved",
-    url: `/${paths.saved}`,
-    icon: Bookmark,
-  },
-  {
-    title: "History",
-    url: `/${paths.history}`,
-    icon: History,
   },
 ];
 

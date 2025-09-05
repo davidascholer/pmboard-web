@@ -73,7 +73,7 @@ export const AppToolbar = ({
               className="p-2 cursor-pointer hover-highlight rounded-full flex flex-col gap-1 justify-center items-center"
               onClick={() => navigate("/")}
             >
-              <img src="/icon.svg" alt={DOMAIN} className="w-8 h-8" />
+              <img src="/pmboard_icon.svg" alt={DOMAIN} className="w-8 h-8" />
               <span className="text-xs ">{DOMAIN}</span>
             </button>
           ) : null}
