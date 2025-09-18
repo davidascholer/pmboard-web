@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import PageContainer from "@/app/components/PageContainer";
 import { useNavigate, useParams } from "react-router";
 import paths from "@/app/router/paths";
-import { activateUser } from "@/app/api/controller/userApi";
+// import { activateUser } from "@/app/api/controller/userApi";
 import { Button } from "@/ui/components/button";
 
 export default function VerifyToken() {
@@ -19,16 +20,16 @@ export default function VerifyToken() {
     } else {
       const activateUserAccount = async () => {
         // Call the API to verify the token
-        const response = await activateUser({ token });
+        // const response = await activateUser({ token });
 
         // Handle the response
-        if (response.ok) {
-          setMessage("Token verified successfully!");
-          SetVerifySuccess(true);
-        } else {
-          // Handle error response
-          setMessage("Token invalid or expired.");
-        }
+        // if (response.ok) {
+        //   setMessage("Token verified successfully!");
+        //   SetVerifySuccess(true);
+        // } else {
+        //   // Handle error response
+        //   setMessage("Token invalid or expired.");
+        // }
       };
       activateUserAccount();
     }

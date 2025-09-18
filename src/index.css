@@ -161,7 +161,7 @@
   --color-bee-neutral: #a76f2f;
   --color-bee-background: #f3e6c988;
   --color-bee-background-light: #f3e6c944;
-  --color-bee-background-accent: #5a3e2baa;
+  --color-bee-background-accent: #5a3e2bdd;
   --color-bee-accent-light: #ffb700;
   --color-bee-accent-dark: #5a3e2b;
   --color-bee-light: #f3e6c9;
@@ -243,6 +243,10 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+
+  .themed-scrollbar {
+    scrollbar-color: var(--color-toolbar-background) var(--color-toolbar-ring);
   }
 }
 

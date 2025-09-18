@@ -9,13 +9,14 @@
 // COMMON TYPES
 // =============================================================================
 
-export interface ApiParams {
-  [key: string]: string;
-}
-
 export interface ApiQuery {
   [key: string]: string | string[] | undefined;
 }
+
+// Types for API calls
+export type ApiRequestData = Record<string, unknown> | FormData | null;
+export type ApiParams = Record<string, string>;
+
 
 // =============================================================================
 // USER ROUTES (/pmboard/api/v1/users)

@@ -1,9 +1,9 @@
-import useAppToast from "@/app/utils/hooks/useAppToast";
+import useAppToast from "@/app/lib/hooks/useAppToast";
 import { useNavigate } from "react-router";
 import PageContainer from "@/app/components/PageContainer";
 import ForgotPasswordForm from "@/app/components/auth/reset-password-form/ForgotPasswordForm";
 import paths from "@/app/router/paths";
-import { sendMFACodeEmail } from "@/app/api/controller/userApi";
+// import { sendMFACodeEmail } from "@/app/api/controller/userApi";
 
 export default function ForgotPasswordPage() {
   const appToast = useAppToast();
@@ -18,9 +18,9 @@ export default function ForgotPasswordPage() {
     }
 
     // Call the API to send the MFA code to the email
-    sendMFACodeEmail({
-      email: userEmail,
-    });
+    // sendMFACodeEmail({
+    //   email: userEmail,
+    // });
 
     appToast(
       "none " +`Reset password email sent to ${userEmail}! Please check your inbox.`

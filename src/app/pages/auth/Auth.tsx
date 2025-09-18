@@ -27,7 +27,6 @@ export default function SignInPage() {
     //   await mfaApi.sendEmailToken({
     //     email: formValues.email,
     //   });
-
     // if (sendActivationEmailResponse.ok) {
     //   navigate(`/${paths.auth.root}/${paths.auth.tokenSent}`);
     // } else {
@@ -70,13 +69,10 @@ export default function SignInPage() {
   };
 
   // const appToast = useAppToast();
-  const [, formAction, isPending] = useActionState(
-    handleSignIn,
-    undefined
-  );
+  const [, formAction, isPending] = useActionState(handleSignIn, undefined);
 
   return (
-    <PageContainer>
+    <PageContainer className="bg-[url(/bees_4k.jpg)] bg-fixed bg-cover bg-center w-full h-full text-bee-neutral overflow-scroll themed-scrollbar">
       <LoginForm
         formAction={formAction}
         loading={isPending}

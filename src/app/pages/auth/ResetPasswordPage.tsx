@@ -1,21 +1,20 @@
-import useAppToast from "@/app/utils/hooks/useAppToast";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import useAppToast from "@/app/lib/hooks/useAppToast";
 import PageContainer from "@/app/components/PageContainer";
 import ResetPasswordForm from "@/app/components/auth/reset-password-form/ResetPasswordForm";
 import { useNavigate } from "react-router";
 import paths from "@/app/router/paths";
 import { useState } from "react";
-import { resetPassword } from "@/app/api/controller/userApi";
-import { useAppSelector } from "@/state/hooks";
+// import { resetPassword } from "@/app/api/controller/userApi";
 import { Button } from "@/ui/components/button";
 
-export default function ResetPasswordPage() {
+export default function ResetPasswordPage(user: { email?: string }) {
   const appToast = useAppToast();
-  const { email } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
   const [codeExpired, setCodeExpired] = useState(false);
   const [formValues, setFormValues] = useState({
     code: "",
-    email: email ? email : "",
+    email: user.email ? user.email : "",
     password: "",
     passwordConfirm: "",
   });
@@ -29,23 +28,23 @@ export default function ResetPasswordPage() {
 
     setFormValues({
       code: authCode,
-      email,
+      email: user.email ? user.email : "",
       password: newUserPassword,
       passwordConfirm: newUserPasswordConfirm,
     });
 
-    const response = await resetPassword({
-      email: userEmail,
-      password: newUserPassword,
-      code: authCode, // MFA code sent to the email
-    });
+    // const response = await resetPassword({
+    //   email: userEmail,
+    //   password: newUserPassword,
+    //   code: authCode, // MFA code sent to the email
+    // });
 
-    if (!response.ok) {
-      appToast("error " + response.error || "Failed to reset password.");
-      if (response.error && response.error === "Key is expired.")
-        setCodeExpired(true);
-      return;
-    }
+    // if (!response.ok) {
+    //   appToast("error " + response.error || "Failed to reset password.");
+    //   if (response.error && response.error === "Key is expired.")
+    //     setCodeExpired(true);
+    //   return;
+    // }
 
     appToast(
       "success " +

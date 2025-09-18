@@ -1,18 +1,12 @@
 import { cn } from "@/ui/lib/utils";
-import {
-  Toolbar,
-  ToolbarAvatarDropdown,
-  ToolbarAvatarLink,
-  ToolbarBadge,
-  ToolbarGroup,
-} from "./Toolbar";
-import { ChevronLeft } from "lucide-react";
+import { Toolbar, ToolbarGroup } from "./Toolbar";
+import { ChevronLeft, User } from "lucide-react";
 import { useNavigate } from "react-router";
-import { useAppSelector } from "@/state/hooks";
-import { accountPaths } from "@/app/router/RouterPaths";
+// import { accountPaths } from "@/app/router/RouterPaths";
 import { Button } from "@/ui/components/button";
-import { DOMAIN } from "@/shared/constants";
-import { NotificationBadge } from "../notification/NotificationBadge";
+import { DOMAIN } from "@/app/api/lib/constants";
+import { AppTooltip } from "../AppTooltip";
+// import { NotificationBadge } from "../notification/NotificationBadge";
 
 type AppToolbarProps = {
   sidebarTrigger?: React.ReactNode | boolean;
@@ -20,6 +14,7 @@ type AppToolbarProps = {
   searchbar?: React.ReactNode;
   back?: boolean;
   logo?: boolean;
+  account?: boolean;
   customItem?: React.ReactNode;
   children?: React.ReactNode;
 };
@@ -30,19 +25,15 @@ export const AppToolbar = ({
   searchbar,
   back = false,
   logo = false,
+  account = true,
   customItem,
   children,
 }: AppToolbarProps) => {
-  const user = useAppSelector((state) => state.user);
   const navigate = useNavigate();
 
-  const profileImageURL =
-    user && typeof user.profile_picture_url === "string"
-      ? user.profile_picture_url
-      : "";
-  const notificationCount = user?.notifications?.filter(
-    (notification) => !notification.is_read
-  ).length;
+  // const notificationCount = user?.notifications?.filter(
+  //   (notification) => !notification.is_read
+  // ).length;
 
   return (
     <div>
@@ -61,7 +52,7 @@ export const AppToolbar = ({
           )}
           {back ? (
             <Button
-              className="p-2 cursor-pointer hover-highlight rounded-full w-20"
+              className="p-2 cursor-pointer hover-highlight rounded-full w-20 bg-toolbar-background"
               variant="outline"
               onClick={() => navigate(-1)}
             >
@@ -73,7 +64,12 @@ export const AppToolbar = ({
               className="p-2 cursor-pointer hover-highlight rounded-full flex flex-col gap-1 justify-center items-center"
               onClick={() => navigate("/")}
             >
-              <img src="/pmboard_icon.svg" alt={DOMAIN} className="w-8 h-8" />
+              <User aria-value="pmboard icon" className="w-8 h-8" />
+              {/* <img
+                src="/pmboard_icon.svg"
+                alt={"pmboard icon"}
+                className="w-8 h-8"
+              /> */}
               <span className="text-xs ">{DOMAIN}</span>
             </button>
           ) : null}
@@ -83,7 +79,7 @@ export const AppToolbar = ({
           {searchbar}
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarBadge
+          {/* <ToolbarBadge
             count={notificationCount}
             href="/notifications"
             iconSize={24}
@@ -94,15 +90,16 @@ export const AppToolbar = ({
               iconClassName="text-sidebar-primary-foreground"
               className="hover:bg-none"
             />
-          </ToolbarBadge>
-          {accountPaths ? (
-            <ToolbarAvatarDropdown
-              imageSrc={profileImageURL}
-              paths={accountPaths}
-            />
-          ) : (
-            <ToolbarAvatarLink imageSrc={profileImageURL} href="/account" />
-          )}
+          </ToolbarBadge> */}
+          {account ? (
+            <AppTooltip message="Account" side="left">
+                <User
+                 size={28}
+                 className="bg-none cursor-pointer hover-highlight"
+                onClick={() => navigate("/account")}
+              />
+            </AppTooltip>
+          ) : null}
         </ToolbarGroup>
       </Toolbar>
       {children}

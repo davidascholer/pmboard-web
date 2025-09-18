@@ -1,6 +1,6 @@
 /**
  * API Response Types for PM Board Backend
- * 
+ *
  * This file contains TypeScript interfaces for all API response bodies
  * returned by the PM Board application endpoints.
  */
@@ -18,18 +18,31 @@ export interface ApiSuccess {
   message: string;
 }
 
-// =============================================================================
-// PRISMA MODEL TYPES (Based on Return Signatures)
-// =============================================================================
+export interface AuthSignInResponse {
+  a: string; // Access Token
+  r: string; // Refresh Token
+}
 
+export interface AuthRefreshTokenResponse {
+  a: string; // New Access Token
+}
+
+export interface AuthSignUpResponse {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+}
 export interface UserMembership {
-  status: 'FREE' | 'STARTUP' | 'TEAM' | 'ENTERPRISE';
+  status: "FREE" | "STARTUP" | "TEAM" | "ENTERPRISE";
   startedAt: string;
   endsAt: string;
 }
 
 export interface UserNextMembership {
-  status: 'FREE' | 'STARTUP' | 'TEAM' | 'ENTERPRISE';
+  status: "FREE" | "STARTUP" | "TEAM" | "ENTERPRISE";
   startsAt: string;
   endsAt: string;
 }
@@ -50,8 +63,8 @@ export interface ProjectMemberUser {
 export interface ProjectMember {
   id: string;
   userId: string;
-  role: 'OWNER' | 'ADMIN' | 'MEMBER';
-  memberStatus: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+  role: "OWNER" | "ADMIN" | "MEMBER";
+  memberStatus: "ACTIVE" | "INACTIVE" | "PENDING";
   User: ProjectMemberUser;
 }
 
@@ -68,9 +81,9 @@ export interface ProjectDetails {
   description: string;
   createdAt: string;
   updatedAt: string;
-  projectType: 'WATERFALL' | 'KANBAN' | 'SCRUM';
+  projectType: "WATERFALL" | "KANBAN" | "SCRUM";
   ownerId: string;
-  status: 'ACTIVE' | 'ARCHIVED';
+  status: "ACTIVE" | "ARCHIVED";
   owner: ProjectOwner;
   members: ProjectMember[];
   features: Feature[];
@@ -82,9 +95,9 @@ export interface UserProject {
   description: string;
   createdAt: string;
   updatedAt: string;
-  projectType: 'WATERFALL' | 'KANBAN' | 'SCRUM';
+  projectType: "WATERFALL" | "KANBAN" | "SCRUM";
   ownerId: string;
-  status: 'ACTIVE' | 'ARCHIVED';
+  status: "ACTIVE" | "ARCHIVED";
   members: ProjectMember[];
   features: Feature[];
 }
@@ -92,15 +105,15 @@ export interface UserProject {
 export interface UserProjectMembership {
   id: string;
   userId: string;
-  role: 'OWNER' | 'ADMIN' | 'MEMBER';
-  memberStatus: 'ACTIVE' | 'INACTIVE' | 'PENDING';
+  role: "OWNER" | "ADMIN" | "MEMBER";
+  memberStatus: "ACTIVE" | "INACTIVE" | "PENDING";
   project: {
     id: string;
     name: string;
     description: string;
     createdAt: string;
     updatedAt: string;
-    projectType: 'WATERFALL' | 'KANBAN' | 'SCRUM';
+    projectType: "WATERFALL" | "KANBAN" | "SCRUM";
     ownerId: string;
   };
 }
@@ -134,9 +147,9 @@ export interface TicketDetails {
   id: string;
   title: string;
   description: string;
-  priority: 'NONE' | 'LOW' | 'MODERATE' | 'HIGH' | 'URGENT';
-  status: 'UNASSIGNED' | 'IN_PROGRESS' | 'IN_REVIEW' | 'COMPLETED';
-  section: 'ACTIVE' | 'ARCHIVED' | 'BACKLOG';
+  priority: "NONE" | "LOW" | "MODERATE" | "HIGH" | "URGENT";
+  status: "UNASSIGNED" | "IN_PROGRESS" | "IN_REVIEW" | "COMPLETED";
+  section: "ACTIVE" | "ARCHIVED" | "BACKLOG";
   createdAt: string;
   updatedAt: string;
   feature: Feature;

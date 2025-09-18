@@ -1,19 +1,18 @@
-export type UserProfileType = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  phone: string;
-  address: string;
-  birth_date: string;
-  profile_picture_url: string;
-  last_visit: string;
-  date_joined: string;
-  settings: UserProfileSettingsType;
-  notifications: UserNotificationType[];
-  saved_items: number[];
-};
+import { UserMembership, UserNextMembership, UserProject, UserProjectMembership } from "@/app/api/types/api-responses";
 
+export type UserProfileType = {
+  id: string;
+  name: string;
+  email: string;
+  settings: Record<string, unknown> | null;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+  membership: UserMembership;
+  nextMembership: UserNextMembership | null;
+  projectsOwned: UserProject[];
+  projectsJoined: UserProjectMembership[];
+};
 export type UserNotificationType = {
   is_read: boolean;
   message: string;
@@ -46,3 +45,10 @@ export type ApiResponseType = {
   error?: string;
   data?: unknown;
 };
+
+export type ThemeProviderStateType = {
+  theme: ColorThemeType;
+  changeTheme: () => void;
+};
+export type ColorThemeType = "light" | "dark" | "system";
+export const PM_BOARD_COLOR_THEME_KEY = "pm-board-color-theme";

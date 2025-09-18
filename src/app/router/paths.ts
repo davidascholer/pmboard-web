@@ -1,5 +1,6 @@
 export default {
   home: "",
+  admin: "admin",
   auth: {
     root: "auth",
     signIn: "",

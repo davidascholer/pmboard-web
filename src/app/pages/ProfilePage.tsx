@@ -1,14 +1,17 @@
 import PageContainer from "../components/PageContainer";
-import { useAppSelector } from "@/state/hooks";
 import { SignInMessage } from "../components/SignInMessage";
 import { Button } from "@/ui/components/button";
 import { useNavigate } from "react-router";
 import paths from "../router/paths";
-import { signOut } from "../utils/utils";
-import { sendMFACodeEmail } from "../api/controller/userApi";
+import { signOut } from "../lib/util";
+import { mfaApi } from "../api/controller/mfaApi";
+import { useState } from "react";
 
 export default function ProfilePage() {
-  const user = useAppSelector((state) => state.user);
+  const [user] = useState({
+    signedIn: true,
+    email: "test@example.com",
+  });
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -32,8 +35,8 @@ export default function ProfilePage() {
                 variant="link"
                 className="cursor-pointer p-0"
                 onClick={() => {
-                  // Call the API to send the MFA code to the email
-                  sendMFACodeEmail({
+                  // Call the API to send the email token
+                  mfaApi.sendEmailToken({
                     email: user.email,
                   });
                   navigate(`/${paths.auth.root}/${paths.auth.resetPassword}`);

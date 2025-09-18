@@ -1,19 +1,19 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { apiSlice } from "./services/apiSlice";
 import { userSlice } from "./services/userSlice";
+import { projectSlice } from "./services/projectSlice";
 
 const store = configureStore({
   reducer: {
     user: userSlice.reducer,
-    [apiSlice.reducerPath]: apiSlice.reducer,
+    project: projectSlice.reducer,
   },
-  // Required for RTK Query caching functionality
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      // Default is 32ms. Change to 128ms
-      immutableCheck: { warnAfter: 128 },
-      serializableCheck: { warnAfter: 128 },
-    }).concat(apiSlice.middleware),
+  // // Required for RTK Query caching functionality
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     // Default is 32ms. Change to 128ms
+  //     immutableCheck: { warnAfter: 128 },
+  //     serializableCheck: { warnAfter: 128 },
+  //   }),
 });
 
 // Can still subscribe to the store

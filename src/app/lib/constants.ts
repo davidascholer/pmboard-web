@@ -1,0 +1,5 @@
+const STORAGE_KEY_PREFIX = "pmboard_";
+export const STORAGE_KEYS = {
+  ACCESS_TOKEN: STORAGE_KEY_PREFIX + "at",
+  REFRESH_TOKEN: STORAGE_KEY_PREFIX + "rt",
+};
