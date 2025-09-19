@@ -8,6 +8,7 @@ export const loginSchema = z.object({
 export const signupSchema = z
   .object({
     email: z.string().email(),
+    username: z.string().min(3).max(30),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters")
@@ -39,6 +40,10 @@ export const resetPasswordSchema = z
     message: "Passwords do not match",
     path: ["passwordConfirm"],
   });
+
+export const mfaCodeSchema = z.object({
+  code: z.string().min(1).max(10),
+});
 
 export const forgotPasswordSchema = z.object({
   email: z.string().email(),

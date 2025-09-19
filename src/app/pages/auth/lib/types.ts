@@ -1,0 +1,1 @@
+export type FormStateType = "login" | "signup" | "reset-password" | "token-sent";

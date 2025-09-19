@@ -17,6 +17,8 @@ import { cn } from "@/ui/lib/utils";
 import { forgotPasswordSchema } from "../utils/schemas";
 import { startTransition } from "react";
 import { FormDataObject } from "../utils/types";
+import { useNavigate } from "react-router";
+import paths from "@/app/router/paths";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   formAction: (formData: FormData) => void | Promise<void>;
@@ -33,6 +35,7 @@ export default function ForgotPasswordForm({
   headerMsg,
   ...props
 }: LoginFormProps) {
+  const navigate = useNavigate();
   const form = useForm<z.output<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: { email: "" },
@@ -73,7 +76,11 @@ export default function ForgotPasswordForm({
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter Email" {...field} autoComplete="email"/>
+                        <Input
+                          placeholder="Enter Email"
+                          {...field}
+                          autoComplete="email"
+                        />
                       </FormControl>
                       <FormDescription>
                         {/* enter a message for the user to see or keep blank to allocate space for an error */}
@@ -104,9 +111,22 @@ export default function ForgotPasswordForm({
                 </svg>
               </div>
             ) : (
-              <Button type="submit" className="w-full cursor-pointer">
-                Forgot Password
-              </Button>
+              <>
+                <Button type="submit" className="w-full cursor-pointer">
+                  Send Password Reset Email
+                </Button>
+                <div className="text-center text-sm">
+                  <button
+                    type="button"
+                    className="underline underline-offset-4 cursor-pointer"
+                    onClick={() => {
+                      navigate("/" + paths.auth.root, { replace: true });
+                    }}
+                  >
+                    Return To Log In
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </form>

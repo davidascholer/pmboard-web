@@ -9,13 +9,11 @@
 // COMMON RESPONSE TYPES
 // =============================================================================
 
-export interface ApiError {
+export interface ApiResponse<T = unknown> {
+  ok: boolean;
+  status: number;
   message: string;
-  error?: string;
-}
-
-export interface ApiSuccess {
-  message: string;
+  data?: T;
 }
 
 export interface AuthSignInResponse {
@@ -27,14 +25,16 @@ export interface AuthRefreshTokenResponse {
   a: string; // New Access Token
 }
 
-export interface AuthSignUpResponse {
-  id: string;
-  name: string;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  isActive: boolean;
-}
+// Leave out if account activation is required
+// export interface AuthSignUpResponse {
+//   id: string;
+//   name: string;
+//   email: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   isActive: boolean;
+// }
+
 export interface UserMembership {
   status: "FREE" | "STARTUP" | "TEAM" | "ENTERPRISE";
   startedAt: string;

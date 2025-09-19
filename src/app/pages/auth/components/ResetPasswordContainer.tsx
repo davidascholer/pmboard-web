@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import useAppToast from "@/app/lib/hooks/useAppToast";
 import PageContainer from "@/app/components/PageContainer";
-import ResetPasswordForm from "@/app/components/auth/reset-password-form/ResetPasswordForm";
+import ResetPasswordForm from "@/app/components/auth/forms/ResetPasswordForm";
 import { useNavigate } from "react-router";
 import paths from "@/app/router/paths";
 import { useState } from "react";

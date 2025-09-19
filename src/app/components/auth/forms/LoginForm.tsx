@@ -1,23 +1,23 @@
+import { startTransition } from "react";
 import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/ui/components/button";
-import { Input } from "@/ui/components/input";
 import { cn } from "@/ui/lib/utils";
-import { signupSchema } from "../utils/schemas";
-import { startTransition } from "react";
-import { FormDataObject } from "../utils/types";
+import { loginSchema } from "../utils/schemas";
 import {
+  FormField,
   Form,
   FormControl,
   FormDescription,
-  FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/ui/components/form";
+import { Button } from "@/ui/components/button";
+import { Input } from "@/ui/components/input";
+import { FormDataObject } from "../utils/types";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   formAction: (formData: FormData) => void | Promise<void>;
@@ -25,30 +25,31 @@ interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   loading?: boolean;
   termsOfServiceUrl?: string;
   privacyPolicyUrl?: string;
-  loginUrl?: string;
+  forgotPasswordUrl?: string;
+  signupUrl?: string;
   formValues?: {
     email: string;
     password: string;
-    passwordConfirm: string;
   };
   headerMsg: string;
 }
 
-export function SignupForm({
+export function LoginForm({
   className,
   formAction,
   icon,
   loading = false,
   termsOfServiceUrl = "/terms-of-service",
   privacyPolicyUrl = "/privacy-policy",
-  loginUrl = "/sign-up",
-  formValues = { email: "", password: "", passwordConfirm: "" },
+  forgotPasswordUrl = "/forgot-password",
+  signupUrl = "/sign-up",
+  formValues = { email: "", password: "" },
   headerMsg,
   ...props
 }: LoginFormProps) {
   const navigate = useNavigate();
-  const form = useForm<z.output<typeof signupSchema>>({
-    resolver: zodResolver(signupSchema),
+  const form = useForm<z.output<typeof loginSchema>>({
+    resolver: zodResolver(loginSchema),
     defaultValues: formValues,
   });
 
@@ -59,13 +60,12 @@ export function SignupForm({
       const formData = new FormData();
       formData.append("email", data.email);
       formData.append("password", data.password);
-      formData.append("passwordConfirm", data.passwordConfirm);
       formAction(formData);
     });
   };
 
   return (
-    <div className={cn("flex flex-col gap-6 mt-20", className)} {...props}>
+    <div className={cn("flex flex-col gap-6 mt-4", className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="flex flex-col gap-6">
@@ -91,9 +91,9 @@ export function SignupForm({
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                          autoComplete="email"
                           placeholder="Enter Email"
                           {...field}
+                          autoComplete="email"
                         />
                       </FormControl>
                       <FormDescription>
@@ -110,37 +110,22 @@ export function SignupForm({
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <div className="flex items-center">
+                        <FormLabel>Password</FormLabel>
+                        <a
+                          href={forgotPasswordUrl}
+                          className="ml-auto text-sm underline-offset-4 hover:underline"
+                        >
+                          Forgot your password?
+                        </a>
+                      </div>
+
                       <FormControl>
                         <Input
-                          autoComplete="password"
                           placeholder="Enter Password"
                           {...field}
                           type="password"
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        {/* enter a message for the user to see or keep blank to allocate space for an error */}
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="grid gap-2">
-                <FormField
-                  control={form.control}
-                  name="passwordConfirm"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Confirm Password</FormLabel>
-                      <FormControl>
-                        <Input
-                          autoComplete="password"
-                          placeholder="Confirm Password"
-                          {...field}
-                          type="password"
+                          autoComplete="current-password"
                         />
                       </FormControl>
                       <FormDescription>
@@ -152,15 +137,15 @@ export function SignupForm({
                 />
               </div>
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <button
                   type="button"
                   className="underline underline-offset-4 cursor-pointer"
                   onClick={() => {
-                    navigate(loginUrl, { replace: true });
+                    navigate(signupUrl, { replace: true });
                   }}
                 >
-                  Log In
+                  Sign Up
                 </button>
               </div>
 
@@ -185,14 +170,14 @@ export function SignupForm({
                 </div>
               ) : (
                 <Button type="submit" className="w-full cursor-pointer">
-                  Sign Up
+                  Log In
                 </Button>
               )}
             </div>
           </div>
         </form>
         <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4">
-          By clicking 'Sign Up', you agree to our{" "}
+          By clicking 'Log In', you agree to our{" "}
           <a
             href={termsOfServiceUrl}
             className="hover:[&_a]:text-primary hover:text-white"
@@ -212,6 +197,7 @@ export function SignupForm({
     </div>
   );
 }
+
 {
   /* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -226,7 +212,7 @@ export function SignupForm({
                   fill="currentColor"
                 />
               </svg>
-              Signup with Apple
+              Login with Apple
             </Button>
             <Button variant="outline" className="w-full">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -235,7 +221,7 @@ export function SignupForm({
                   fill="currentColor"
                 />
               </svg>
-              Signup with Google
+              Login with Google
             </Button>
           </div> */
 }

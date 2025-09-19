@@ -1,23 +1,23 @@
-import { startTransition } from "react";
 import { useNavigate } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { Button } from "@/ui/components/button";
+import { Input } from "@/ui/components/input";
 import { cn } from "@/ui/lib/utils";
-import { loginSchema } from "../utils/schemas";
+import { signupSchema } from "../utils/schemas";
+import { startTransition } from "react";
+import { FormDataObject } from "../utils/types";
 import {
-  FormField,
   Form,
   FormControl,
   FormDescription,
+  FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/ui/components/form";
-import { Button } from "@/ui/components/button";
-import { Input } from "@/ui/components/input";
-import { FormDataObject } from "../utils/types";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   formAction: (formData: FormData) => void | Promise<void>;
@@ -25,31 +25,31 @@ interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   loading?: boolean;
   termsOfServiceUrl?: string;
   privacyPolicyUrl?: string;
-  forgotPasswordUrl?: string;
-  signupUrl?: string;
+  loginUrl?: string;
   formValues?: {
     email: string;
+    username: string;
     password: string;
+    passwordConfirm: string;
   };
   headerMsg: string;
 }
 
-export function LoginForm({
+export function SignupForm({
   className,
   formAction,
   icon,
   loading = false,
   termsOfServiceUrl = "/terms-of-service",
   privacyPolicyUrl = "/privacy-policy",
-  forgotPasswordUrl = "/forgot-password",
-  signupUrl = "/sign-up",
-  formValues = { email: "", password: "" },
+  loginUrl = "/sign-up",
+  formValues = { email: "", username: "", password: "", passwordConfirm: "" },
   headerMsg,
   ...props
 }: LoginFormProps) {
   const navigate = useNavigate();
-  const form = useForm<z.output<typeof loginSchema>>({
-    resolver: zodResolver(loginSchema),
+  const form = useForm<z.output<typeof signupSchema>>({
+    resolver: zodResolver(signupSchema),
     defaultValues: formValues,
   });
 
@@ -59,13 +59,15 @@ export function LoginForm({
       // Convert form data to FormData
       const formData = new FormData();
       formData.append("email", data.email);
+      formData.append("username", data.username);
       formData.append("password", data.password);
+      formData.append("passwordConfirm", data.passwordConfirm);
       formAction(formData);
     });
   };
 
   return (
-    <div className={cn("flex flex-col gap-6 mt-20", className)} {...props}>
+    <div className={cn("flex flex-col gap-6 mt-2", className)} {...props}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)}>
           <div className="flex flex-col gap-6">
@@ -91,9 +93,31 @@ export function LoginForm({
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
+                          autoComplete="email"
                           placeholder="Enter Email"
                           {...field}
-                          autoComplete="email"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        {/* enter a message for the user to see or keep blank to allocate space for an error */}
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="grid gap-2">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input
+                          autoComplete="username"
+                          placeholder="Enter Username"
+                          {...field}
                         />
                       </FormControl>
                       <FormDescription>
@@ -110,22 +134,37 @@ export function LoginForm({
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <div className="flex items-center">
-                        <FormLabel>Password</FormLabel>
-                        <a
-                          href={forgotPasswordUrl}
-                          className="ml-auto text-sm underline-offset-4 hover:underline"
-                        >
-                          Forgot your password?
-                        </a>
-                      </div>
-
+                      <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
+                          autoComplete="password"
                           placeholder="Enter Password"
                           {...field}
                           type="password"
-                          autoComplete="current-password"
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        {/* enter a message for the user to see or keep blank to allocate space for an error */}
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="grid gap-2">
+                <FormField
+                  control={form.control}
+                  name="passwordConfirm"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Confirm Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          autoComplete="password"
+                          placeholder="Confirm Password"
+                          {...field}
+                          type="password"
                         />
                       </FormControl>
                       <FormDescription>
@@ -137,15 +176,15 @@ export function LoginForm({
                 />
               </div>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Already have an account?{" "}
                 <button
                   type="button"
                   className="underline underline-offset-4 cursor-pointer"
                   onClick={() => {
-                    navigate(signupUrl, { replace: true });
+                    navigate(loginUrl, { replace: true });
                   }}
                 >
-                  Sign Up
+                  Log In
                 </button>
               </div>
 
@@ -170,14 +209,14 @@ export function LoginForm({
                 </div>
               ) : (
                 <Button type="submit" className="w-full cursor-pointer">
-                  Log In
+                  Sign Up
                 </Button>
               )}
             </div>
           </div>
         </form>
         <div className="text-balance text-center text-xs text-muted-foreground [&_a]:underline [&_a]:underline-offset-4">
-          By clicking 'Log In', you agree to our{" "}
+          By clicking 'Sign Up', you agree to our{" "}
           <a
             href={termsOfServiceUrl}
             className="hover:[&_a]:text-primary hover:text-white"
@@ -197,7 +236,6 @@ export function LoginForm({
     </div>
   );
 }
-
 {
   /* <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
             <span className="relative z-10 bg-background px-2 text-muted-foreground">
@@ -212,7 +250,7 @@ export function LoginForm({
                   fill="currentColor"
                 />
               </svg>
-              Login with Apple
+              Signup with Apple
             </Button>
             <Button variant="outline" className="w-full">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -221,7 +259,7 @@ export function LoginForm({
                   fill="currentColor"
                 />
               </svg>
-              Login with Google
+              Signup with Google
             </Button>
           </div> */
 }

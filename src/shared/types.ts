@@ -13,6 +13,16 @@ export type UserProfileType = {
   projectsOwned: UserProject[];
   projectsJoined: UserProjectMembership[];
 };
+
+export type UserAccountVerifyType = {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+};
+
 export type UserNotificationType = {
   is_read: boolean;
   message: string;
@@ -42,7 +52,7 @@ export type UserProfileSettingsType = {
 export type ApiResponseType = {
   ok: boolean;
   status: number;
-  error?: string;
+  message: string;
   data?: unknown;
 };
 

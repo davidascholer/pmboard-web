@@ -1,8 +1,8 @@
 import useAppToast from "@/app/lib/hooks/useAppToast";
 import { useNavigate } from "react-router";
-import PageContainer from "@/app/components/PageContainer";
-import ForgotPasswordForm from "@/app/components/auth/reset-password-form/ForgotPasswordForm";
+import ForgotPasswordForm from "@/app/components/auth/forms/ForgotPasswordForm";
 import paths from "@/app/router/paths";
+import AuthContainer from "./components/AuthContainer";
 // import { sendMFACodeEmail } from "@/app/api/controller/userApi";
 
 export default function ForgotPasswordPage() {
@@ -31,12 +31,11 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <PageContainer>
+    <AuthContainer>
       <ForgotPasswordForm
         formAction={handleEmailCode}
         headerMsg={"Forgot Password"}
-        className=" h-[80vh] items-center justify-center"
       />
-    </PageContainer>
+    </AuthContainer>
   );
 }

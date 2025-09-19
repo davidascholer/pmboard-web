@@ -1,3 +1,4 @@
+import { ApiResponseType } from "@/shared/types";
 import { ApiParams, ApiRequestData } from "../types/api-requests";
 import { API_BASE_URL } from "./constants";
 
@@ -7,7 +8,10 @@ export const createApiCall = <T = unknown>(
   method: "GET" | "POST" | "PATCH" | "DELETE" = "GET",
   requiresAuth: boolean = true
 ) => {
-  return async (data?: ApiRequestData, params?: ApiParams): Promise<T> => {
+  return async (
+    data?: ApiRequestData,
+    params?: ApiParams
+  ): Promise<ApiResponseType & { data?: T }> => {
     let url = `${API_BASE_URL}${endpoint}`;
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
@@ -15,7 +19,9 @@ export const createApiCall = <T = unknown>(
       });
     }
 
-    const makeRequest = async (token?: string): Promise<T> => {
+    const makeRequest = async (
+      token?: string
+    ): Promise<ApiResponseType & { data?: T }> => {
       const config: RequestInit = {
         method,
         headers: {
@@ -29,12 +35,21 @@ export const createApiCall = <T = unknown>(
       }
 
       const response = await fetch(url, config);
-
+      console.log("API Response Raw:", response);
+      const responseData = await response.json();
       if (!response.ok) {
-        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+        return {
+          ok: response.ok,
+          status: response.status,
+          message: responseData.message,
+        };
       }
-
-      return response.json();
+      return {
+        ok: true,
+        status: response.status,
+        message: responseData.message,
+        data: responseData.data,
+      };
     };
 
     if (!requiresAuth) {
