@@ -2,6 +2,7 @@
 // import store from "@/state/store";
 import userApi from "../api/controller/userApi";
 import { UserSignInRequest } from "../api/types/api-requests";
+import paths from "../router/paths";
 import { STORAGE_KEYS } from "./constants";
 
 /**
@@ -12,7 +13,7 @@ export const signOut = async () => {
   // Remove the access and refresh token from local storage
   localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
   localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-  window.location.href = "/";
+  window.location.href = "/" + paths.home;
   // Dispatch the signOut action to update the Redux store
   // dispatch(userSignOut());
 };

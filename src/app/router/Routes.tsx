@@ -15,12 +15,14 @@ import ResetPasswordPage from "../pages/auth/components/ResetPasswordContainer";
 import ForgotPasswordPage from "../pages/auth/ForgotPasswordPage";
 import Admin from "../pages/Admin";
 import VerifyAccountPage from "../pages/auth/VerifyAccountPage";
+import PromoPage from "../pages/PromoPage";
 
 function Routes() {
   return (
     <AppRoutes>
       {/* Route in this section have access to the navbar */}
-      <Route index element={<Home />} />
+      <Route index element={<PromoPage />} />
+      <Route path={paths.home} element={<Home />} />
       <Route path={paths.admin} element={<Admin />} />
       {/* <Route path={paths.notifications} element={<NotificationsPage />} /> */}
       <Route path={paths.account} element={<AccountPage />} />

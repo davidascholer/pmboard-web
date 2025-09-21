@@ -1,15 +1,15 @@
-import { UserMembership, UserNextMembership, UserProject, UserProjectMembership } from "@/app/api/types/api-responses";
+import { UserMembership, UserProject, UserProjectMembership } from "@/app/api/types/api-responses";
 
 export type UserProfileType = {
-  id: string;
+  // id: string;
   name: string;
   email: string;
   settings: Record<string, unknown> | null;
   createdAt: string;
-  updatedAt: string;
-  isActive: boolean;
+  // updatedAt: string;
+  // isActive: boolean;
   membership: UserMembership;
-  nextMembership: UserNextMembership | null;
+  // nextMembership: UserNextMembership | null;
   projectsOwned: UserProject[];
   projectsJoined: UserProjectMembership[];
 };

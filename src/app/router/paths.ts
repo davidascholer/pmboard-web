@@ -1,5 +1,6 @@
 export default {
-  home: "",
+  promo: "",
+  home: "board",
   admin: "admin",
   auth: {
     root: "auth",

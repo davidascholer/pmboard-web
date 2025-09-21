@@ -13,7 +13,7 @@ export const SignInMessage = () => {
           navigate("/" + paths.auth.root);
         }}
       >
-        Sign In
+        Log In
       </Button>
     </div>
   );

@@ -1,6 +1,7 @@
 import { ApiResponseType } from "@/shared/types";
 import { ApiParams, ApiRequestData } from "../types/api-requests";
 import { API_BASE_URL } from "./constants";
+import store from "@/state/store";
 
 // Higher-order function for making API calls
 export const createApiCall = <T = unknown>(
@@ -26,8 +27,10 @@ export const createApiCall = <T = unknown>(
         method,
         headers: {
           "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "http://localhost:5173",
           ...(requiresAuth && token && { Authorization: `Bearer ${token}` }),
         },
+        credentials: "include",
       };
 
       if (data && (method === "POST" || method === "PATCH")) {
@@ -37,18 +40,19 @@ export const createApiCall = <T = unknown>(
       const response = await fetch(url, config);
       console.log("API Response Raw:", response);
       const responseData = await response.json();
+      console.log("API Response Data:", responseData);
       if (!response.ok) {
         return {
           ok: response.ok,
           status: response.status,
-          message: responseData.message,
+          message: responseData.message || "Error",
         };
       }
       return {
         ok: true,
         status: response.status,
-        message: responseData.message,
-        data: responseData.data,
+        message: responseData.message || "Success",
+        data: responseData,
       };
     };
 
@@ -56,52 +60,35 @@ export const createApiCall = <T = unknown>(
       return makeRequest();
     }
 
-    const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      throw new Error("No access token available");
-    }
+    const accessToken = store.getState().user.authToken;
 
     try {
       return await makeRequest(accessToken);
     } catch (error) {
       // If auth fails, try to refresh token
       if (error instanceof Error && error.message.includes("401")) {
-        const refreshToken = localStorage.getItem("refreshToken");
         try {
-          if (!refreshToken) {
-            throw new Error("No refresh token available");
-          }
           const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ refreshToken }),
           });
 
           if (refreshResponse.ok) {
             const { accessToken: newAccessToken } =
               await refreshResponse.json();
-            localStorage.setItem("accessToken", newAccessToken);
+            store.dispatch({
+              type: "user/setAuthToken",
+              payload: newAccessToken,
+            });
             return makeRequest(newAccessToken);
           }
         } catch {
-          // Refresh failed, clear tokens
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
           throw new Error("Authentication failed and token refresh failed");
         }
 
-        // No refresh token or refresh failed
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
         throw new Error("Authentication required");
       }
       throw error;
     }
   };
-};
-
-// Helper function to get auth token (implement based on your auth system)
-export const getAuthToken = (): string => {
-  // Replace with your actual token retrieval logic
-  return localStorage.getItem("authToken") || "";
 };

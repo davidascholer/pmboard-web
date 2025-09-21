@@ -18,6 +18,7 @@ import {
 import { Button } from "@/ui/components/button";
 import { Input } from "@/ui/components/input";
 import { FormDataObject } from "../utils/types";
+import paths from "@/app/router/paths";
 
 interface LoginFormProps extends React.ComponentPropsWithoutRef<"div"> {
   formAction: (formData: FormData) => void | Promise<void>;
@@ -71,7 +72,7 @@ export function LoginForm({
           <div className="flex flex-col gap-6">
             <div className="flex flex-col items-center gap-2">
               <a
-                href="/"
+                href={"/" + paths.home}
                 className="flex flex-col items-center gap-2 font-medium"
               >
                 <div className="flex h-8 w-8 items-center justify-center rounded-md">

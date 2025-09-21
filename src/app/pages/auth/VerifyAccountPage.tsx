@@ -31,6 +31,7 @@ export default function VerifyAccountPage() {
         return "state not updated";
       }
 
+      console.log("Account verified successfully:", response);
       // Todo complete login process here, e.g., store tokens, redirect, etc.
       navigate("/");
       return "state updated";

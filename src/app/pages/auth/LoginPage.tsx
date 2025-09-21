@@ -8,10 +8,14 @@ import { ApiResponseType } from "@/shared/types";
 import userApi from "@/app/api/controller/userApi";
 import useAppToast from "@/app/lib/hooks/useAppToast";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "@/state/hooks";
+import { setLoginUserData } from "@/state/services/userSlice";
+import { authApi } from "@/app/api/controller/authApi";
 
 export default function LoginPage() {
   const appToast = useAppToast();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
@@ -41,7 +45,8 @@ export default function LoginPage() {
 
       // Todo complete login process here, e.g., store tokens, redirect, etc.
       console.log("User signed in successfully:", response);
-      navigate("/");
+      dispatch(setLoginUserData(response.data));
+      // navigate("/" + paths.home);
       return "state updated";
     } catch (error) {
       // Handle unexpected errors
@@ -61,7 +66,7 @@ export default function LoginPage() {
         loading={isPending}
         // icon={<Carrot />}
         formValues={formValues}
-        headerMsg={"Sign In"}
+        headerMsg={"Log In"}
         termsOfServiceUrl={`/${paths.termsOfService}`}
         privacyPolicyUrl={`/${paths.privacyPolicy}`}
         signupUrl={`/${paths.auth.root}/${paths.auth.signUp}`}
@@ -74,6 +79,15 @@ export default function LoginPage() {
             An activation email has been sent to your inbox.
           </span>
         </div> */}
+      <button
+        onClick={() => {
+          authApi.refreshToken().then((res) => {
+            console.log("refresh token res", res);
+          });
+        }}
+      >
+        test refresh token endpoint
+      </button>
     </AuthContainer>
   );
 }

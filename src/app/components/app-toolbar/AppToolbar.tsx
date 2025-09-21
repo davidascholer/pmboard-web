@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { Button } from "@/ui/components/button";
 import { DOMAIN } from "@/app/api/lib/constants";
 import { AppTooltip } from "../AppTooltip";
+import paths from "@/app/router/paths";
 // import { NotificationBadge } from "../notification/NotificationBadge";
 
 type AppToolbarProps = {
@@ -62,7 +63,7 @@ export const AppToolbar = ({
           {logo ? (
             <button
               className="p-2 cursor-pointer hover-highlight rounded-full flex flex-col gap-1 justify-center items-center"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/" + paths.home)}
             >
               <User aria-value="pmboard icon" className="w-8 h-8" />
               {/* <img
