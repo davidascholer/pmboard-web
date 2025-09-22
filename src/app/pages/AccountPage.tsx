@@ -5,7 +5,8 @@ import { SignInMessage } from "../components/SignInMessage";
 import PageContainer from "../components/PageContainer";
 import { signOut } from "../lib/util";
 import { AppToolbar } from "../components/app-toolbar/AppToolbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAppSelector } from "@/state/hooks";
 // import AppContext from "@/context/AppContext";
 
 const AccountPageItem = ({
@@ -27,7 +28,9 @@ const AccountPageItem = ({
           }}
           className="bg-bee-background-accent max-w-2xl rounded-xl p-8 w-full cursor-pointer hover-highlight flex justify-center items-center"
         >
-          <span className="text-white shadow-white shadow-2xl cursor-pointer">{children}</span>
+          <span className="text-white shadow-white shadow-2xl cursor-pointer">
+            {children}
+          </span>
         </Button>
       </div>
       {/* <Separator className="mx-2" /> */}
@@ -41,12 +44,17 @@ export default function AccountPage() {
     signedIn: true,
     email: "user@example.com",
   });
+
+  const signedIn = useAppSelector((state) => state.user.signedIn);
   const navigate = useNavigate();
 
-  const handleSignOut = () => {
-    signOut();
-    navigate("/" + paths.home, { replace: true });
-  };
+  useEffect(() => {
+    // Redirect to login if not signed in
+    if (!signedIn) {
+      // Navigate to login page
+      navigate("/auth", { replace: true });
+    }
+  }, [navigate, signedIn]);
 
   return (
     <PageContainer
@@ -66,7 +74,7 @@ export default function AccountPage() {
           </AccountPageItem>
           <div className="w-full text-center">
             <Button
-              onClick={handleSignOut}
+              onClick={signOut}
               className="bg-bee-background-accent max-w-2xl rounded-xl p-8 w-full cursor-pointer hover-highlight flex justify-center items-center mx-auto"
               variant="secondary"
             >

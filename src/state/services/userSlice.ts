@@ -1,28 +1,30 @@
 import { UserProfileType } from "@/shared/types";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState: UserProfileType & { authToken: string, signedIn: boolean } = {
-  name: "",
-  email: "",
-  settings: null,
-  createdAt: "",
-  membership: {
-    status: "FREE",
-    startedAt: "",
-    endsAt: "",
-  },
-  projectsOwned: [],
-  projectsJoined: [],
-  // notifications: [],
-  authToken: "",
-  signedIn: false,
-};
+export const initialState: UserProfileType & { authToken: string; signedIn: boolean } =
+  {
+    name: "",
+    email: "",
+    settings: null,
+    createdAt: "",
+    membership: {
+      status: "FREE",
+      startedAt: "",
+      endsAt: "",
+    },
+    projectsOwned: [],
+    projectsJoined: [],
+    // notifications: [],
+    authToken: "",
+    signedIn: false,
+  };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setLoginUserData: (state, action) => {
+      console.log("Setting user data in slice:", action.payload);
       const userData = action.payload;
       state.email = userData.email;
       state.name = userData.name;

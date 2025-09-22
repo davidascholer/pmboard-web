@@ -4,4 +4,5 @@ import { createApiCall } from "../lib/util";
 export const authApi = {
   // Refresh access token
   refreshToken: createApiCall("/auth/refresh", "GET"),
+  signOutOnServer: createApiCall("/auth/sign-out", "GET"),
 };
